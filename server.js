@@ -5,12 +5,22 @@ const bodyParser  = require('body-parser');
 const expect      = require('chai').expect;
 const cors        = require('cors');
 require('dotenv').config();
-
+const mongoose = require('mongoose');
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
 const runner            = require('./test-runner');
 
 let app = express();
+
+mongoose.connect(
+  process.env['MONGO_URI'],
+  { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(()=>{
+      console.log("We are connected to mongo db")
+    })
+    .catch((err) => {
+      console.log("Error unable to connect to mongo db", err);
+    });
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
