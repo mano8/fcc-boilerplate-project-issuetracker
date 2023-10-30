@@ -20,6 +20,14 @@ module.exports = class Ut{
         return (Ut.isNumber(fNum) && Ut.isNumber(fix)) ? parseFloat(fNum.toFixed(fix)) : defaultValue;
     }
     /**
+     * Test if value is not empty [undefined, null or '']
+     * @param {*} val 
+     * @returns True if value is not empty
+     */
+    isNotEmpty(val){
+        return val !== undefined && val !== null && val !== ''
+    }
+    /**
      * Test if value is a valid function
      * @param value {object} The value to test
      * @return {boolean} Return true if value is a valid function
@@ -39,17 +47,42 @@ module.exports = class Ut{
      * Get key by value from object
      * @param {{*}} object The source object
      * @param {*} value The object value to search
-     * @returns {string} The object key retrieved from value or undefined if value is not retrived.
+     * @returns {string | undefined} The object key retrieved from value or undefined if value is not retrived.
      */
     static getDictionaryKeyByValue(object, value){
-        return Object.keys(object).find(key => {
-            if(Ut.isObject(value) || Ut.isArray(value)){
-                return JSON.stringify(object[key]) === JSON.stringify(value)
-            }else{
-                return object[key] === value
-            }
-            
-        });
+        if(Ut.isObject(object)){
+            return Object.keys(object).find(key => {
+                if(Ut.isObject(value) || Ut.isArray(value)){
+                    return JSON.stringify(object[key]) === JSON.stringify(value)
+                }else{
+                    return object[key] === value
+                }
+                
+            });
+        }
+        return;
+        
+    }
+    /**
+     * Filter object by array keys
+     * @param {{*}} object The source object
+     * @param {[{string}]} value The object value to search
+     * @param {boolean} removeEmptyValues Set if empty values must be removed from result
+     * @returns {{*} | undefined} The filtered object or undefined if value is not retrived or bad properties set.
+     */
+    static filterObjectByKey(object, keys, removeEmptyValues=false){
+        if(Ut.isObject(object) && Ut.isArray(keys)){
+            return Object.keys(object).reduce((res, key, index) => {
+                const withEmptyValues = !removeEmptyValues 
+                    || (removeEmptyValues === true && Ut.isNotEmpty(object[key]))
+                if(keys.includes(key)
+                    && withEmptyValues){
+                    res[key] = object[key]
+                }
+                return res;
+            }, {});
+        }
+        return;
     }
     /**
      * Test if value is a valid array
