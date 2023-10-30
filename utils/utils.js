@@ -24,7 +24,7 @@ module.exports = class Ut{
      * @param {*} val 
      * @returns True if value is not empty
      */
-    isNotEmpty(val){
+    static isNotEmpty(val){
         return val !== undefined && val !== null && val !== ''
     }
     /**
