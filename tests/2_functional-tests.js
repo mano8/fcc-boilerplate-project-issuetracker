@@ -27,7 +27,7 @@ suite('Functional Tests', function () {
                     assert.strictEqual(res.body.created_by, "toto");
                     assert.strictEqual(res.body.assigned_to, "titi");
                     assert.strictEqual(res.body.status_text, "running");
-                    assert.strictEqual(res.body.open, false);
+                    assert.strictEqual(res.body.open, true);
                     _id_test = res.body._id;
                     done();
                 });
@@ -49,7 +49,7 @@ suite('Functional Tests', function () {
                     assert.strictEqual(res.body.issue_title, "test");
                     assert.strictEqual(res.body.issue_text, "new test");
                     assert.strictEqual(res.body.created_by, "toto");
-                    assert.strictEqual(res.body.open, false);
+                    assert.strictEqual(res.body.open, true);
                     done();
                 });
         });
@@ -101,7 +101,7 @@ suite('Functional Tests', function () {
         test('Test GET /api/issues/apitest with multiple filters', function (done) {
             chai
                 .request(server)
-                .get('/api/issues/apitest?issue_title=test&open=false')
+                .get('/api/issues/apitest?issue_title=test&open=true')
 
                 .end(function (err, res) {
                     assert.equal(res.status, 200);
