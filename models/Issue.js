@@ -128,10 +128,15 @@ let issueSchema = new mongoose.Schema(
                                 if(Object.keys(issueItem).length > 1){
                                     this.findByIdAndUpdate(issueId, issueItem, {returnDocument: 'after'})
                                     .then(savedIssue=>{
-                                        resolve(savedIssue)
+                                        if(Ut.isObject(savedIssue)){
+                                            resolve(savedIssue)
+                                        }
+                                        else{
+                                            resolve({ error: 'could not update', '_id': issueId })
+                                        }
                                     })
                                     .catch(() => {
-                                        resolve({ error: 'could not update', '_id': issueItem._id })
+                                        resolve({ error: 'could not update', '_id': issueId })
                                     })
                                 }
                                 else{
