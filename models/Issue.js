@@ -121,7 +121,7 @@ let issueSchema = new mongoose.Schema(
                             if(!Ut.isStrNotEmpty(issueItem._id)){
                                 resolve({ error: 'missing _id', '_id': issueItem._id })
                             }
-                            else if(Ut.isObject(issueItem) && MongoHelper.isValidObjectId(issueItem._id)){
+                            else if(Ut.isObject(issueItem)){
                                 issueItem.project_id = projectItem._id;
                                 const issueId = issueItem._id;
                                 delete issueItem._id;
@@ -141,8 +141,8 @@ let issueSchema = new mongoose.Schema(
                                 resolve({ error: 'could not update', '_id': issueItem._id })  
                             }
                         })
-                        .catch(error => {
-                            reject(error)
+                        .catch(() => {
+                            reject({ error: 'could not update', '_id': 0 })
                         })
                 })
             },
