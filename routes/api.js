@@ -27,9 +27,10 @@ module.exports = function (app) {
       const issueItem = req.body;
       Issue.AddIssue(projectSlug, issueItem)
         .then(savedIssue=>{
+          const result = Ut.filterObjectByKey(savedIssue.toObject(), Issue.getIssueKeys())
           console.log('Post /api/issues/:project -> result')
-          console.log(savedIssue)
-          res.json(Ut.filterObjectByKey(savedIssue.toObject(), Issue.getIssueKeys()))
+          console.log(result)
+          res.json(result)
         })
         .catch(err=> {
           res.json({ error: 'required field(s) missing' })
