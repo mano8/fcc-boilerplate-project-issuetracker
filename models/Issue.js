@@ -130,8 +130,8 @@ let issueSchema = new mongoose.Schema(
                                     .then(savedIssue=>{
                                         resolve(savedIssue)
                                     })
-                                    .catch(error => {
-                                        reject(error)
+                                    .catch(() => {
+                                        resolve({ error: 'could not update', '_id': issueItem._id })
                                     })
                                 }
                                 else{
