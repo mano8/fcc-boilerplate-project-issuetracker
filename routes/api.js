@@ -11,9 +11,12 @@ module.exports = function (app) {
       const filters = req.query
       Issue.getIssuesByProjectSlug(projectSlug, filters)
         .then(issueItems => {
+          console.log('Get /api/issues/:project -> result')
+          console.log(issueItems)
           res.json(issueItems)
         })
         .catch(err=> {
+          console.log('Get /api/issues/:project -> error')
           console.log(err)
           res.json({ 'error': 'Not Found' })
         })
@@ -24,6 +27,7 @@ module.exports = function (app) {
       const issueItem = req.body;
       Issue.AddIssue(projectSlug, issueItem)
         .then(savedIssue=>{
+          console.log('Post /api/issues/:project -> result')
           console.log(savedIssue)
           res.json(Ut.filterObjectByKey(savedIssue.toObject(), Issue.getIssueKeys()))
         })
