@@ -32,6 +32,8 @@ let issueSchema = new mongoose.Schema(
         },
         assigned_to: {
             type: String,
+            default: ''
+            
         },
         open: {
             type: Boolean,
@@ -39,6 +41,7 @@ let issueSchema = new mongoose.Schema(
         },
         status_text: {
             type: String,
+            default: '',
         }
     },
     {
