@@ -95,7 +95,7 @@ let projectSchema = new mongoose.Schema(
     });
 
     projectSchema.pre('save', function (next) {
-        this.slug = slugify(this.name);
+        this.slug = slugify(this.name.toLowerCase());
         next();
        });
 

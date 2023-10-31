@@ -23,7 +23,7 @@ module.exports = function (app) {
       const issueItem = req.body;
       Issue.AddIssue(projectSlug, issueItem)
         .then(savedIssue=>{
-          res.json(Ut.filterObjectByKey(savedIssue.toObject(), Issue.getIssueKeys(), true))
+          res.json(Ut.filterObjectByKey(savedIssue.toObject(), Issue.getIssueKeys()))
         })
         .catch(err=> {
           res.json({ error: 'required field(s) missing' })
