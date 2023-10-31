@@ -193,7 +193,8 @@ suite('Functional Tests', function () {
                 .put('/api/issues/apitest')
                 .set('content-type', 'application/x-www-form-urlencoded')
                 .send({
-                    _id: false
+                    _id: false,
+                    issue_text: 'new test1A2B',
                 })
                 .end(function (err, res) {
                     assert.equal(res.status, 200);
