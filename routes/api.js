@@ -14,6 +14,7 @@ module.exports = function (app) {
           res.json(issueItems)
         })
         .catch(err=> {
+          console.log(err)
           res.json({ 'error': 'Not Found' })
         })
     })
@@ -23,6 +24,7 @@ module.exports = function (app) {
       const issueItem = req.body;
       Issue.AddIssue(projectSlug, issueItem)
         .then(savedIssue=>{
+          console.log(savedIssue)
           res.json(Ut.filterObjectByKey(savedIssue.toObject(), Issue.getIssueKeys()))
         })
         .catch(err=> {
@@ -35,6 +37,8 @@ module.exports = function (app) {
       const issueItem = req.body;
       Issue.UpdateIssue(projectSlug, issueItem)
         .then(savedIssue=>{
+          console.log('Put /api/issues/:project -> result')
+          console.log(savedIssue)
           if(Ut.isObject(savedIssue) && !savedIssue.hasOwnProperty('error')){
             res.json({  result: 'successfully updated', '_id': savedIssue._id })
           } 
