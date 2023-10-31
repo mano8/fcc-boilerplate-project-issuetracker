@@ -11,13 +11,9 @@ module.exports = function (app) {
       const filters = req.query
       Issue.getIssuesByProjectSlug(projectSlug, filters)
         .then(issueItems => {
-          console.log('Get /api/issues/:project -> result')
-          console.log(issueItems)
           res.json(issueItems)
         })
         .catch(err=> {
-          console.log('Get /api/issues/:project -> error')
-          console.log(err)
           res.json({ 'error': 'Not Found' })
         })
     })
@@ -28,8 +24,6 @@ module.exports = function (app) {
       Issue.AddIssue(projectSlug, issueItem)
         .then(savedIssue=>{
           const result = Ut.filterObjectByKey(savedIssue.toObject(), Issue.getIssueKeys())
-          console.log('Post /api/issues/:project -> result')
-          console.log(result)
           res.json(result)
         })
         .catch(err=> {
@@ -42,9 +36,7 @@ module.exports = function (app) {
       const issueItem = req.body;
       Issue.UpdateIssue(projectSlug, issueItem)
         .then(savedIssue=>{
-          console.log('Put /api/issues/:project -> result')
-          console.log(savedIssue)
-          if(Ut.isObject(savedIssue) && !savedIssue.hasOwnProperty('error')){
+          if(Ut.isObject(savedIssue) && !savedIssue.hasOwnProperty('error')){          
             res.json({  result: 'successfully updated', '_id': savedIssue._id })
           } 
           else{
